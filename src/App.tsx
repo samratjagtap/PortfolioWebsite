@@ -58,12 +58,57 @@ function AppContent() {
   };
 
   const skills = [
-    { name: 'React/React Native', level: 95, icon: <Code2 className="w-6 h-6" />, color: 'cyan' },
-    { name: 'JavaScript/TypeScript', level: 92, icon: <Code2 className="w-6 h-6" />, color: 'purple' },
-    { name: 'Node.js', level: 88, icon: <Globe className="w-6 h-6" />, color: 'emerald' },
-    { name: 'Mobile Development', level: 90, icon: <Smartphone className="w-6 h-6" />, color: 'pink' },
-    { name: 'UI/UX Design', level: 85, icon: <Zap className="w-6 h-6" />, color: 'orange' },
-    { name: 'Database Design', level: 87, icon: <Globe className="w-6 h-6" />, color: 'blue' },
+    {
+      category: 'Frontend Technologies & Frameworks',
+      skills: [
+        { name: 'Flutter', icon: <Smartphone className="w-6 h-6" />, color: 'blue' },
+        { name: 'React Native', icon: <Smartphone className="w-6 h-6" />, color: 'cyan' },
+        { name: 'React.js', icon: <Code2 className="w-6 h-6" />, color: 'cyan' },
+        { name: 'Redux', icon: <Code2 className="w-6 h-6" />, color: 'purple' },
+        { name: 'AngularJS', icon: <Code2 className="w-6 h-6" />, color: 'red' },
+      ]
+    },
+    {
+      category: 'Backend Technologies & Frameworks',
+      skills: [
+        { name: 'Node.js', icon: <Globe className="w-6 h-6" />, color: 'emerald' },
+        { name: 'Django', icon: <Globe className="w-6 h-6" />, color: 'green' },
+        { name: 'Supabase', icon: <Globe className="w-6 h-6" />, color: 'emerald' },
+        { name: 'RESTful APIs', icon: <Globe className="w-6 h-6" />, color: 'blue' },
+      ]
+    },
+    {
+      category: 'DevOps & Cloud Tools',
+      skills: [
+        { name: 'Docker', icon: <Zap className="w-6 h-6" />, color: 'blue' },
+        { name: 'AWS', icon: <Zap className="w-6 h-6" />, color: 'orange' },
+      ]
+    },
+    {
+      category: 'Mobile Development Tools',
+      skills: [
+        { name: 'Android Studio', icon: <Smartphone className="w-6 h-6" />, color: 'green' },
+      ]
+    },
+    {
+      category: 'Databases',
+      skills: [
+        { name: 'Firebase', icon: <Globe className="w-6 h-6" />, color: 'orange' },
+        { name: 'PostgreSQL', icon: <Globe className="w-6 h-6" />, color: 'blue' },
+        { name: 'MySQL', icon: <Globe className="w-6 h-6" />, color: 'blue' },
+        { name: 'MongoDB', icon: <Globe className="w-6 h-6" />, color: 'green' },
+      ]
+    },
+    {
+      category: 'Software Development Practices & Tools',
+      skills: [
+        { name: 'Git', icon: <Code2 className="w-6 h-6" />, color: 'orange' },
+        { name: 'CI/CD', icon: <Zap className="w-6 h-6" />, color: 'purple' },
+        { name: 'Agile Methodology', icon: <Code2 className="w-6 h-6" />, color: 'pink' },
+        { name: 'Microservice Architecture', icon: <Globe className="w-6 h-6" />, color: 'indigo' },
+        { name: 'Object-Oriented Programming', icon: <Code2 className="w-6 h-6" />, color: 'cyan' },
+      ]
+    },
   ];
 
   const projects = [
@@ -441,32 +486,51 @@ function AppContent() {
             <GlitchText text="Technical Arsenal" className={themeConfig.accent} />
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {skills.map((skill, index) => (
-              <MorphingCard key={index} className="p-8 group" hoverColor={skill.color}>
-                <div className="flex items-center mb-6">
-                  <div className={`text-${skill.color}-400 mr-4 group-hover:scale-110 transition-transform`}>
-                    {skill.icon}
-                  </div>
-                  <h3 className={`text-xl font-display font-semibold ${themeConfig.textPrimary}`}>{skill.name}</h3>
-                </div>
+          <div className="space-y-12">
+            {skills.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-6">
+                <h3 className={`text-2xl font-display font-bold ${themeConfig.textPrimary} text-center mb-8`}>
+                  {category.category}
+                </h3>
                 
-                <div className="relative mb-4">
-                  <div className={`w-full ${themeConfig.cardBg} rounded-full h-3`}>
-                    <div 
-                      className={`bg-gradient-to-r from-${skill.color}-400 to-${skill.color}-600 h-3 rounded-full transition-all duration-1000 animate-pulse-glow`}
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                  <div className={`absolute -top-8 right-0 text-${skill.color}-400 font-mono font-bold`}>
-                    {skill.level}%
-                  </div>
+                {/* Pinterest-style masonry grid */}
+                <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div key={skillIndex} className="break-inside-avoid mb-6">
+                      <MorphingCard 
+                        className={`p-6 group hover:scale-105 transition-all duration-300 ${
+                          // Vary card heights for Pinterest effect
+                          skillIndex % 3 === 0 ? 'h-32' : skillIndex % 3 === 1 ? 'h-28' : 'h-36'
+                        }`} 
+                        hoverColor={skill.color}
+                      >
+                        <div className="flex flex-col items-center justify-center h-full text-center space-y-3">
+                          <div className={`text-${skill.color}-400 group-hover:scale-125 transition-all duration-300 group-hover:rotate-12`}>
+                            {skill.icon}
+                          </div>
+                          <h4 className={`text-sm font-display font-semibold ${themeConfig.textPrimary} group-hover:${themeConfig.accent} transition-colors leading-tight`}>
+                            {skill.name}
+                          </h4>
+                          
+                          {/* Decorative elements */}
+                          <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className={`w-1 h-1 rounded-full bg-${skill.color}-400`} />
+                            <div className={`w-1 h-1 rounded-full bg-${skill.color}-400 animation-delay-100`} />
+                            <div className={`w-1 h-1 rounded-full bg-${skill.color}-400 animation-delay-200`} />
+                          </div>
+                        </div>
+                        
+                        {/* Floating particles on hover */}
+                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                          <div className={`absolute top-2 right-2 w-1 h-1 bg-${skill.color}-400 rounded-full animate-ping`} />
+                          <div className={`absolute bottom-2 left-2 w-1 h-1 bg-${skill.color}-400 rounded-full animate-ping animation-delay-300`} />
+                          <div className={`absolute top-1/2 left-1 w-0.5 h-0.5 bg-${skill.color}-400 rounded-full animate-pulse`} />
+                        </div>
+                      </MorphingCard>
+                    </div>
+                  ))}
                 </div>
-                
-                <div className={`${themeConfig.textSecondary} text-sm`}>
-                  Proficiency Level: <span className={`text-${skill.color}-400 font-semibold`}>Expert</span>
-                </div>
-              </MorphingCard>
+              </div>
             ))}
           </div>
         </div>
