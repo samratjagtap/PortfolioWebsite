@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Code2, Smartphone, Globe, Zap, Video, Camera, Users, ExternalLink, Menu, X, ArrowRight, Play, Pause } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, Code2, Smartphone, Globe, Zap, Video, Camera, Users, ExternalLink, Menu, X, ArrowRight, Play, Pause, ChevronRight } from 'lucide-react';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { CursorTrail } from './components/CursorTrail';
@@ -16,6 +16,7 @@ function AppContent() {
   const [typedText, setTypedText] = useState('');
   const [currentRole, setCurrentRole] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   
   const roles = ['Software Developer', 'Mobile Developer', 'Web Developer', 'Full Stack Engineer'];
   const fullText = roles[currentRole];
@@ -60,53 +61,149 @@ function AppContent() {
   const skills = [
     {
       category: 'Frontend Technologies & Frameworks',
+      icon: <Code2 className="w-6 h-6" />,
+      color: 'cyan',
       skills: [
-        { name: 'Flutter', icon: <Smartphone className="w-6 h-6" />, color: 'blue' },
-        { name: 'React Native', icon: <Smartphone className="w-6 h-6" />, color: 'cyan' },
-        { name: 'React.js', icon: <Code2 className="w-6 h-6" />, color: 'cyan' },
-        { name: 'Redux', icon: <Code2 className="w-6 h-6" />, color: 'purple' },
-        { name: 'AngularJS', icon: <Code2 className="w-6 h-6" />, color: 'red' },
+        { 
+          name: 'Flutter', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg',
+          color: 'blue' 
+        },
+        { 
+          name: 'React Native', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+          color: 'cyan' 
+        },
+        { 
+          name: 'React.js', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+          color: 'cyan' 
+        },
+        { 
+          name: 'Redux', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg',
+          color: 'purple' 
+        },
+        { 
+          name: 'AngularJS', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg',
+          color: 'red' 
+        },
       ]
     },
     {
       category: 'Backend Technologies & Frameworks',
+      icon: <Globe className="w-6 h-6" />,
+      color: 'emerald',
       skills: [
-        { name: 'Node.js', icon: <Globe className="w-6 h-6" />, color: 'emerald' },
-        { name: 'Django', icon: <Globe className="w-6 h-6" />, color: 'green' },
-        { name: 'Supabase', icon: <Globe className="w-6 h-6" />, color: 'emerald' },
-        { name: 'RESTful APIs', icon: <Globe className="w-6 h-6" />, color: 'blue' },
+        { 
+          name: 'Node.js', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+          color: 'emerald' 
+        },
+        { 
+          name: 'Django', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg',
+          color: 'green' 
+        },
+        { 
+          name: 'Supabase', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg',
+          color: 'emerald' 
+        },
+        { 
+          name: 'RESTful APIs', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg',
+          color: 'blue' 
+        },
       ]
     },
     {
       category: 'DevOps & Cloud Tools',
+      icon: <Zap className="w-6 h-6" />,
+      color: 'orange',
       skills: [
-        { name: 'Docker', icon: <Zap className="w-6 h-6" />, color: 'blue' },
-        { name: 'AWS', icon: <Zap className="w-6 h-6" />, color: 'orange' },
+        { 
+          name: 'Docker', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+          color: 'blue' 
+        },
+        { 
+          name: 'AWS', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
+          color: 'orange' 
+        },
       ]
     },
     {
       category: 'Mobile Development Tools',
+      icon: <Smartphone className="w-6 h-6" />,
+      color: 'green',
       skills: [
-        { name: 'Android Studio', icon: <Smartphone className="w-6 h-6" />, color: 'green' },
+        { 
+          name: 'Android Studio', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg',
+          color: 'green' 
+        },
       ]
     },
     {
       category: 'Databases',
+      icon: <Globe className="w-6 h-6" />,
+      color: 'blue',
       skills: [
-        { name: 'Firebase', icon: <Globe className="w-6 h-6" />, color: 'orange' },
-        { name: 'PostgreSQL', icon: <Globe className="w-6 h-6" />, color: 'blue' },
-        { name: 'MySQL', icon: <Globe className="w-6 h-6" />, color: 'blue' },
-        { name: 'MongoDB', icon: <Globe className="w-6 h-6" />, color: 'green' },
+        { 
+          name: 'Firebase', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg',
+          color: 'orange' 
+        },
+        { 
+          name: 'PostgreSQL', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
+          color: 'blue' 
+        },
+        { 
+          name: 'MySQL', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+          color: 'blue' 
+        },
+        { 
+          name: 'MongoDB', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+          color: 'green' 
+        },
       ]
     },
     {
       category: 'Software Development Practices & Tools',
+      icon: <Code2 className="w-6 h-6" />,
+      color: 'purple',
       skills: [
-        { name: 'Git', icon: <Code2 className="w-6 h-6" />, color: 'orange' },
-        { name: 'CI/CD', icon: <Zap className="w-6 h-6" />, color: 'purple' },
-        { name: 'Agile Methodology', icon: <Code2 className="w-6 h-6" />, color: 'pink' },
-        { name: 'Microservice Architecture', icon: <Globe className="w-6 h-6" />, color: 'indigo' },
-        { name: 'Object-Oriented Programming', icon: <Code2 className="w-6 h-6" />, color: 'cyan' },
+        { 
+          name: 'Git', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+          color: 'orange' 
+        },
+        { 
+          name: 'CI/CD', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
+          color: 'purple' 
+        },
+        { 
+          name: 'Agile Methodology', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg',
+          color: 'pink' 
+        },
+        { 
+          name: 'Microservice Architecture', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg',
+          color: 'indigo' 
+        },
+        { 
+          name: 'Object-Oriented Programming', 
+          logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+          color: 'cyan' 
+        },
       ]
     },
   ];
@@ -486,51 +583,88 @@ function AppContent() {
             <GlitchText text="Technical Arsenal" className={themeConfig.accent} />
           </h2>
           
-          <div className="space-y-12">
+          <div className="max-w-4xl mx-auto space-y-6">
             {skills.map((category, categoryIndex) => (
-              <div key={categoryIndex} className="space-y-6">
-                <h3 className={`text-2xl font-display font-bold ${themeConfig.textPrimary} text-center mb-8`}>
-                  {category.category}
-                </h3>
-                
-                {/* Pinterest-style masonry grid */}
-                <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6">
-                  {category.skills.map((skill, skillIndex) => (
-                    <div key={skillIndex} className="break-inside-avoid mb-6">
-                      <MorphingCard 
-                        className={`p-6 group hover:scale-105 transition-all duration-300 ${
-                          // Vary card heights for Pinterest effect
-                          skillIndex % 3 === 0 ? 'h-32' : skillIndex % 3 === 1 ? 'h-28' : 'h-36'
-                        }`} 
-                        hoverColor={skill.color}
-                      >
-                        <div className="flex flex-col items-center justify-center h-full text-center space-y-3">
-                          <div className={`text-${skill.color}-400 group-hover:scale-125 transition-all duration-300 group-hover:rotate-12`}>
-                            {skill.icon}
-                          </div>
-                          <h4 className={`text-sm font-display font-semibold ${themeConfig.textPrimary} group-hover:${themeConfig.accent} transition-colors leading-tight`}>
-                            {skill.name}
-                          </h4>
-                          
-                          {/* Decorative elements */}
-                          <div className="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div className={`w-1 h-1 rounded-full bg-${skill.color}-400`} />
-                            <div className={`w-1 h-1 rounded-full bg-${skill.color}-400 animation-delay-100`} />
-                            <div className={`w-1 h-1 rounded-full bg-${skill.color}-400 animation-delay-200`} />
-                          </div>
-                        </div>
-                        
-                        {/* Floating particles on hover */}
-                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                          <div className={`absolute top-2 right-2 w-1 h-1 bg-${skill.color}-400 rounded-full animate-ping`} />
-                          <div className={`absolute bottom-2 left-2 w-1 h-1 bg-${skill.color}-400 rounded-full animate-ping animation-delay-300`} />
-                          <div className={`absolute top-1/2 left-1 w-0.5 h-0.5 bg-${skill.color}-400 rounded-full animate-pulse`} />
-                        </div>
-                      </MorphingCard>
+              <MorphingCard key={categoryIndex} className="overflow-hidden" hoverColor={category.color}>
+                {/* Category Header */}
+                <button
+                  onClick={() => setExpandedCategory(
+                    expandedCategory === category.category ? null : category.category
+                  )}
+                  className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors duration-300"
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className={`p-3 rounded-xl bg-${category.color}-500/20 text-${category.color}-400`}>
+                      {category.icon}
                     </div>
-                  ))}
+                    <div className="text-left">
+                      <h3 className={`text-xl font-display font-bold ${themeConfig.textPrimary}`}>
+                        {category.category}
+                      </h3>
+                      <p className={`text-sm ${themeConfig.textSecondary}`}>
+                        {category.skills.length} skills
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight 
+                    className={`w-6 h-6 ${themeConfig.textSecondary} transition-transform duration-300 ${
+                      expandedCategory === category.category ? 'rotate-90' : ''
+                    }`} 
+                  />
+                </button>
+
+                {/* Skills Grid */}
+                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                  expandedCategory === category.category 
+                    ? 'max-h-96 opacity-100' 
+                    : 'max-h-0 opacity-0'
+                }`}>
+                  <div className="p-6 pt-0">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                      {category.skills.map((skill, skillIndex) => (
+                        <div
+                          key={skillIndex}
+                          className={`group relative p-4 rounded-xl ${themeConfig.cardBg} ${themeConfig.border} border hover:border-${skill.color}-500/50 transition-all duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer`}
+                        >
+                          {/* Skill Logo */}
+                          <div className="flex flex-col items-center space-y-3">
+                            <div className="relative">
+                              <img 
+                                src={skill.logo} 
+                                alt={skill.name}
+                                className="w-12 h-12 object-contain group-hover:scale-110 transition-transform duration-300"
+                                onError={(e) => {
+                                  // Fallback to a generic icon if logo fails to load
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = 'none';
+                                  const fallback = target.nextElementSibling as HTMLElement;
+                                  if (fallback) fallback.style.display = 'block';
+                                }}
+                              />
+                              <div className={`hidden w-12 h-12 rounded-lg bg-${skill.color}-500/20 flex items-center justify-center`}>
+                                <Code2 className={`w-6 h-6 text-${skill.color}-400`} />
+                              </div>
+                              
+                              {/* Glow effect on hover */}
+                              <div className={`absolute inset-0 rounded-lg bg-${skill.color}-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm`} />
+                            </div>
+                            
+                            <h4 className={`text-sm font-display font-semibold ${themeConfig.textPrimary} text-center leading-tight group-hover:text-${skill.color}-400 transition-colors duration-300`}>
+                              {skill.name}
+                            </h4>
+                          </div>
+
+                          {/* Floating particles on hover */}
+                          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            <div className={`absolute top-2 right-2 w-1 h-1 bg-${skill.color}-400 rounded-full animate-ping`} />
+                            <div className={`absolute bottom-2 left-2 w-1 h-1 bg-${skill.color}-400 rounded-full animate-ping`} style={{ animationDelay: '0.3s' }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </MorphingCard>
             ))}
           </div>
         </div>
