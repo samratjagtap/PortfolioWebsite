@@ -403,12 +403,16 @@ function AppContent() {
                 { id: 'projects', label: 'Projects' },
                 { id: 'offbeat', label: 'Offbeat' },
                 { id: 'music', label: 'Music' },
+                { id: 'resume', label: 'Resume' },
                 { id: 'contact', label: 'Contact' },
               ].map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium ${
+                  className={`${item.id === 'resume' ? 
+                    `px-4 py-2 rounded-full border-2 ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
+                    `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium`
+                  } ${
                     activeSection === item.id ? themeConfig.accent : ''
                   }`}
                 >
@@ -436,12 +440,16 @@ function AppContent() {
                   { id: 'projects', label: 'Projects' },
                   { id: 'offbeat', label: 'Offbeat' },
                   { id: 'music', label: 'Music' },
+                  { id: 'resume', label: 'Resume' },
                   { id: 'contact', label: 'Contact' },
                 ].map((item) => (
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`text-left ${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium py-2 ${
+                    className={`text-left ${item.id === 'resume' ? 
+                      `px-3 py-2 rounded-lg border ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
+                      `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium py-2`
+                    } ${
                       activeSection === item.id ? themeConfig.accent : ''
                     }`}
                   >
@@ -459,9 +467,9 @@ function AppContent() {
         <div className="container mx-auto text-center relative z-20">
           <div className="mb-8">
             <h1 className="text-7xl md:text-9xl font-display font-bold mb-6">
-              <GlitchText text="Hi, I'm" className={themeConfig.textPrimary} />
+              <span className={themeConfig.textPrimary}>Hi, I'm</span>
               <br />
-              <span className={`${themeConfig.accent} font-bold`}>ALEX</span>
+              <MultilingualName className={`${themeConfig.accent} font-bold ml-4`} />
             </h1>
           </div>
           
@@ -591,7 +599,7 @@ function AppContent() {
                   onClick={() => setExpandedCategory(
                     expandedCategory === category.category ? null : category.category
                   )}
-                  className="w-full p-6 flex items-center justify-between hover:bg-white/5 transition-colors duration-300"
+                  className="w-full p-6 flex items-center justify-between transition-all duration-300"
                 >
                   <div className="flex items-center space-x-4">
                     <div className={`p-3 rounded-xl bg-${category.color}-500/20 text-${category.color}-400`}>
