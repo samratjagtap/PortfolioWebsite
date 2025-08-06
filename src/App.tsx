@@ -8,6 +8,7 @@ import { FloatingElements } from './components/FloatingElements';
 import { GlitchText } from './components/GlitchText';
 import { MorphingCard } from './components/MorphingCard';
 import { SpotifyPlayer } from './components/SpotifyPlayer';
+import { MultilingualName } from './components/MultilingualName';
 
 function AppContent() {
   const { themeConfig } = useTheme();
