@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Code2, Smartphone, Globe, Zap, Video, Camera, Users, ExternalLink, Menu, X, ArrowRight, Play, Pause, ChevronRight } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, Code2, Smartphone, Globe, Zap, Video, Camera, Users, ExternalLink, Menu, X, ArrowRight, Play, Pause, ChevronRight, FileText, Download, Eye } from 'lucide-react';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { CursorTrail } from './components/CursorTrail';
@@ -628,12 +628,12 @@ function AppContent() {
                     ? 'max-h-96 opacity-100' 
                     : 'max-h-0 opacity-0'
                 }`}>
-                  <div className="p-6 pt-0">
+                  <div className="p-6 pt-4 pb-8">
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                       {category.skills.map((skill, skillIndex) => (
                         <div
                           key={skillIndex}
-                          className={`group relative p-4 rounded-xl ${themeConfig.cardBg} ${themeConfig.border} border hover:border-${skill.color}-500/50 transition-all duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer`}
+                          className={`group relative p-4 rounded-xl ${themeConfig.cardBg} ${themeConfig.border} border hover:border-${skill.color}-500/50 transition-all duration-300 hover:scale-105 hover:-translate-y-3 cursor-pointer mb-2`}
                         >
                           {/* Skill Logo */}
                           <div className="flex flex-col items-center space-y-3">
