@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Github, Linkedin, Mail, Code2, Smartphone, Globe, Zap, Video, Camera, Users, ExternalLink, Menu, X, ArrowRight, Play, Pause, ChevronRight, FileText, Download, Eye } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, Instagram, Code2, Smartphone, Globe, Zap, Video, Camera, Users, ExternalLink, Menu, X, ArrowRight, Play, Pause, ChevronRight, FileText, Download, Eye } from 'lucide-react';
 import { ThemeProvider, useTheme } from './components/ThemeProvider';
 import { ThemeSwitcher } from './components/ThemeSwitcher';
 import { CursorTrail } from './components/CursorTrail';
@@ -18,6 +18,7 @@ function AppContent() {
   const [currentRole, setCurrentRole] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   
   const roles = ['Software Developer', 'Mobile Developer', 'Web Developer', 'Full Stack Engineer'];
   const fullText = roles[currentRole];
@@ -244,8 +245,7 @@ function AppContent() {
       title: 'Street Skateboarding',
       description: 'Technical street tricks and urban exploration',
       icon: <Zap className="w-8 h-8" />,
-      details: '8+ years mastering kickflips, rail grinds, and stair sets. Featured in local skate videos.',
-      stats: '500+ tricks learned',
+      details: 'Mastering technical street tricks, rail grinds, and stair sets. Featured in local skate videos and constantly pushing the boundaries of what\'s possible on four wheels.',
       color: 'orange',
       gallery: [
         {
@@ -292,8 +292,7 @@ function AppContent() {
       title: 'Live Streaming',
       description: 'Gaming and coding content creation',
       icon: <Video className="w-8 h-8" />,
-      details: 'Building a community through live coding sessions and gaming streams on Twitch.',
-      stats: '10K+ followers',
+      details: 'Building a vibrant community through live coding sessions and gaming streams. Sharing knowledge, entertaining viewers, and creating meaningful connections in the digital space.',
       color: 'purple',
       gallery: [
         {
@@ -334,8 +333,7 @@ function AppContent() {
       title: 'Motorcycle Stunts',
       description: 'Precision riding and choreographed performances',
       icon: <Camera className="w-8 h-8" />,
-      details: 'Performing wheelies, stoppies, and custom choreographed routines for events.',
-      stats: '50+ performances',
+      details: 'Performing precision wheelies, stoppies, and custom choreographed routines. Each performance is a carefully crafted blend of skill, timing, and adrenaline.',
       color: 'cyan',
       gallery: [
         {
@@ -409,7 +407,7 @@ function AppContent() {
               ].map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
                   className={`${item.id === 'resume' ? 
                     `px-4 py-2 rounded-full border-2 ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
                     `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium`
@@ -446,7 +444,7 @@ function AppContent() {
                 ].map((item) => (
                   <button
                     key={item.id}
-                    onClick={() => scrollToSection(item.id)}
+                    onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
                     className={`text-left ${item.id === 'resume' ? 
                       `px-3 py-2 rounded-lg border ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
                       `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium py-2`
@@ -490,6 +488,7 @@ function AppContent() {
             {[
               { icon: Github, href: '#', color: `hover:${themeConfig.textPrimary}` },
               { icon: Linkedin, href: '#', color: 'hover:text-blue-400' },
+              { icon: Instagram, href: '#', color: 'hover:text-pink-400' },
               { icon: Mail, href: '#', color: 'hover:text-emerald-400' },
             ].map(({ icon: Icon, href, color }, index) => (
               <a
