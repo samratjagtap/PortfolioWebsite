@@ -558,26 +558,68 @@ function AppContent() {
                 take creative risks and find innovative solutions to complex problems.
               </p>
               
-              <div className="space-y-4">
-                {[
-                  { skill: 'Risk Assessment', level: 95, color: 'orange' },
-                  { skill: 'Creative Problem Solving', level: 92, color: 'purple' },
-                  { skill: 'Performance Under Pressure', level: 88, color: 'cyan' },
-                  { skill: 'Community Building', level: 90, color: 'emerald' },
-                ].map((skill, index) => (
-                  <div key={index}>
-                    <div className="flex justify-between mb-2">
-                      <span className={`${themeConfig.textPrimary} font-medium`}>{skill.skill}</span>
-                      <span className={`text-${skill.color}-400`}>{skill.level}%</span>
+              {/* Adventure Highlights */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className={`p-6 ${themeConfig.cardBg} ${themeConfig.border} border rounded-xl group hover:scale-105 transition-all duration-300`}>
+                  <div className="flex items-center mb-4">
+                    <div className="p-3 bg-orange-500/20 rounded-full mr-4">
+                      <Zap className="w-6 h-6 text-orange-400" />
                     </div>
-                    <div className={`w-full ${themeConfig.cardBg} rounded-full h-2`}>
-                      <div 
-                        className={`bg-gradient-to-r from-${skill.color}-400 to-${skill.color}-600 h-2 rounded-full transition-all duration-1000`}
-                        style={{ width: `${skill.level}%` }}
-                      />
-                    </div>
+                    <h4 className={`text-xl font-display font-semibold ${themeConfig.textPrimary}`}>Skateboarding</h4>
                   </div>
-                ))}
+                  <p className={`${themeConfig.textSecondary} text-sm leading-relaxed`}>
+                    Street tricks, rail grinds, and urban exploration. Every session teaches me about persistence, 
+                    precision, and the importance of getting back up after every fall.
+                  </p>
+                </div>
+
+                <div className={`p-6 ${themeConfig.cardBg} ${themeConfig.border} border rounded-xl group hover:scale-105 transition-all duration-300`}>
+                  <div className="flex items-center mb-4">
+                    <div className="p-3 bg-purple-500/20 rounded-full mr-4">
+                      <Video className="w-6 h-6 text-purple-400" />
+                    </div>
+                    <h4 className={`text-xl font-display font-semibold ${themeConfig.textPrimary}`}>Live Streaming</h4>
+                  </div>
+                  <p className={`${themeConfig.textSecondary} text-sm leading-relaxed`}>
+                    Building communities through gaming and coding streams. Real-time interaction and 
+                    problem-solving while entertaining and educating viewers.
+                  </p>
+                </div>
+
+                <div className={`p-6 ${themeConfig.cardBg} ${themeConfig.border} border rounded-xl group hover:scale-105 transition-all duration-300`}>
+                  <div className="flex items-center mb-4">
+                    <div className="p-3 bg-cyan-500/20 rounded-full mr-4">
+                      <Camera className="w-6 h-6 text-cyan-400" />
+                    </div>
+                    <h4 className={`text-xl font-display font-semibold ${themeConfig.textPrimary}`}>Motorcycle Stunts</h4>
+                  </div>
+                  <p className={`${themeConfig.textSecondary} text-sm leading-relaxed`}>
+                    Precision wheelies and choreographed performances. Each stunt requires careful 
+                    planning, risk assessment, and flawless execution.
+                  </p>
+                </div>
+
+                <div className={`p-6 ${themeConfig.cardBg} ${themeConfig.border} border rounded-xl group hover:scale-105 transition-all duration-300`}>
+                  <div className="flex items-center mb-4">
+                    <div className="p-3 bg-emerald-500/20 rounded-full mr-4">
+                      <Users className="w-6 h-6 text-emerald-400" />
+                    </div>
+                    <h4 className={`text-xl font-display font-semibold ${themeConfig.textPrimary}`}>Community Building</h4>
+                  </div>
+                  <p className={`${themeConfig.textSecondary} text-sm leading-relaxed`}>
+                    Creating meaningful connections across different platforms and activities. 
+                    From coding communities to extreme sports enthusiasts.
+                  </p>
+                </div>
+              </div>
+
+              {/* Philosophy Quote */}
+              <div className={`p-6 ${themeConfig.cardBg} ${themeConfig.border} border rounded-xl text-center`}>
+                <blockquote className={`text-xl font-display italic ${themeConfig.textPrimary} mb-4`}>
+                  "The same mindset that helps me land a difficult trick or nail a complex stunt 
+                  is what drives me to solve challenging coding problems."
+                </blockquote>
+                <div className={`w-16 h-1 bg-gradient-to-r ${themeConfig.accent.replace('text-', 'from-')} to-purple-500 mx-auto rounded-full`} />
               </div>
             </MorphingCard>
           </div>
