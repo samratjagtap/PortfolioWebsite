@@ -950,6 +950,7 @@ function AppContent() {
             {[
               { icon: Github, href: '#', label: 'GitHub' },
               { icon: Linkedin, href: '#', label: 'LinkedIn' },
+              { icon: Instagram, href: '#', label: 'Instagram' },
               { icon: Mail, href: '#', label: 'Email' },
             ].map(({ icon: Icon, href, label }, index) => (
               <a
@@ -964,6 +965,59 @@ function AppContent() {
           </div>
         </div>
       </footer>
+
+      {/* Resume Modal */}
+      {isResumeModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            onClick={() => setIsResumeModalOpen(false)}
+          />
+          
+          {/* Modal Content */}
+          <div className={`relative ${themeConfig.cardBg} ${themeConfig.border} border rounded-3xl p-6 max-w-4xl w-full max-h-[90vh] overflow-hidden`}>
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className={`text-3xl font-display font-bold ${themeConfig.textPrimary}`}>
+                My Resume
+              </h2>
+              <div className="flex items-center space-x-4">
+                <a
+                  href="/resume.pdf"
+                  download="Alex_Resume.pdf"
+                  className={`flex items-center space-x-2 px-4 py-2 ${themeConfig.accent.replace('text-', 'bg-')} text-white rounded-lg hover:opacity-90 transition-all duration-300`}
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download</span>
+                </a>
+                <button
+                  onClick={() => setIsResumeModalOpen(false)}
+                  className={`p-2 ${themeConfig.textSecondary} hover:${themeConfig.textPrimary} transition-colors`}
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
+            
+            {/* PDF Viewer */}
+            <div className="w-full h-[70vh] rounded-xl overflow-hidden">
+              <iframe
+                src="/resume.pdf"
+                className="w-full h-full border-0"
+                title="Resume PDF"
+              />
+            </div>
+            
+            {/* Fallback message */}
+            <div className="mt-4 text-center">
+              <p className={`${themeConfig.textSecondary} text-sm`}>
+                Can't see the resume? <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className={`${themeConfig.accent} hover:underline`}>Open in new tab</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
