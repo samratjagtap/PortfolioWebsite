@@ -252,7 +252,7 @@ export const InteractiveBackground: React.FC = () => {
   const getBackgroundStyle = () => {
     switch (themeConfig.name) {
       case 'Light':
-        return 'radial-gradient(ellipse at center, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)';
+        return 'radial-gradient(ellipse at center, #dbeafe 0%, #e0e7ff 30%, #f3e8ff 70%, #fdf4ff 100%)';
       case 'Fire':
         return 'radial-gradient(ellipse at center, #1a1a1a 0%, #2d1b1b 50%, #000000 100%)';
       case 'Funky':
