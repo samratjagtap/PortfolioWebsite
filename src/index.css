@@ -98,9 +98,10 @@ body {
 
 /* Theme-specific styles */
 [data-theme="light"] .glass-morphism {
-  background: rgba(255, 255, 255, 0.90);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15), 0 4px 16px rgba(244, 63, 94, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme="fire"] .glass-morphism {
