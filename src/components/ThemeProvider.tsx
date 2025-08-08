@@ -44,18 +44,18 @@ const themes: Record<Theme, ThemeConfig> = {
   },
   light: {
     name: 'Light',
-    background: 'from-blue-50 via-indigo-50 to-purple-50',
-    cardBg: 'bg-white/95',
+    background: 'from-gradient-to-r from-rose-100 via-teal-50 to-indigo-100',
+    cardBg: 'bg-white/90 shadow-xl shadow-indigo-500/10',
     textPrimary: 'text-slate-800',
     textSecondary: 'text-slate-600',
-    accent: 'text-blue-600',
-    accentSecondary: 'text-indigo-600',
-    border: 'border-blue-200/60',
-    glowColor: 'rgba(59, 130, 246, 0.4)',
+    accent: 'text-emerald-600',
+    accentSecondary: 'text-rose-600',
+    border: 'border-emerald-200/50',
+    glowColor: 'rgba(16, 185, 129, 0.4)',
     nodeColors: {
-      core: '79, 70, 229',
-      satellite: '59, 130, 246',
-      data: '139, 92, 246'
+      core: '16, 185, 129',
+      satellite: '244, 63, 94',
+      data: '99, 102, 241'
     }
   },
   fire: {
