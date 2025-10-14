@@ -386,75 +386,127 @@ function AppContent() {
       <ThemeSwitcher />
 
       {/* Navigation */}
-      {/* Clean Header Navigation */}
-      <header className={`fixed top-0 left-0 right-0 z-40 ${themeConfig.cardBg}/80 backdrop-blur-md ${themeConfig.border} border-b`}>
-        <div className="container mx-auto px-6 py-4">
+      {/* Roadmap Navigation */}
+      <header className={`fixed top-0 left-0 right-0 z-40 ${themeConfig.cardBg}/90 backdrop-blur-md`}>
+        <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="text-xl font-display font-bold">
               <GlitchText text="ALEX" className={`${themeConfig.accent} font-bold`} />
             </div>
-            
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {[
-                { id: 'about', label: 'About' },
-                { id: 'skills', label: 'Skills' },
-                { id: 'projects', label: 'Projects' },
-                { id: 'offbeat', label: 'Offbeat' },
-                { id: 'music', label: 'Music' },
-                { id: 'resume', label: 'Resume' },
-                { id: 'contact', label: 'Contact' },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
-                  className={`${item.id === 'resume' ? 
-                    `px-4 py-2 rounded-full border-2 ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
-                    `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium`
-                  } ${
-                    activeSection === item.id ? themeConfig.accent : ''
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+
+            {/* Desktop Roadmap Navigation */}
+            <nav className="hidden lg:block relative">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+                <path
+                  d="M 0 20 Q 90 20, 120 20 T 240 20 T 360 20 T 480 20 T 600 20 T 720 20 T 840 20"
+                  stroke={themeConfig.accent.includes('cyan') ? 'rgba(34, 211, 238, 0.3)' :
+                         themeConfig.accent.includes('orange') ? 'rgba(251, 146, 60, 0.3)' :
+                         themeConfig.accent.includes('purple') ? 'rgba(168, 85, 247, 0.3)' :
+                         'rgba(34, 211, 238, 0.3)'}
+                  strokeWidth="2"
+                  fill="none"
+                  strokeDasharray="5,5"
+                  className="animate-pulse"
+                />
+              </svg>
+              <div className="flex items-center relative">
+                {[
+                  { id: 'about', label: 'About', step: 1 },
+                  { id: 'skills', label: 'Skills', step: 2 },
+                  { id: 'projects', label: 'Projects', step: 3 },
+                  { id: 'offbeat', label: 'Offbeat', step: 4 },
+                  { id: 'music', label: 'Music', step: 5 },
+                  { id: 'resume', label: 'Resume', step: 6 },
+                  { id: 'contact', label: 'Contact', step: 7 },
+                ].map((item, index) => (
+                  <div key={item.id} className="relative group">
+                    <button
+                      onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
+                      className={`relative flex flex-col items-center transition-all duration-300 px-3 ${
+                        index < 6 ? 'mr-8' : ''
+                      }`}
+                    >
+                      <div className={`relative mb-2 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                        activeSection === item.id
+                          ? `${themeConfig.accent.replace('text-', 'bg-')} text-white shadow-lg scale-110`
+                          : `${themeConfig.cardBg} ${themeConfig.border} border-2 ${themeConfig.textSecondary} group-hover:border-current group-hover:${themeConfig.accent} group-hover:scale-105`
+                      }`}>
+                        {item.step}
+                        {activeSection === item.id && (
+                          <div className={`absolute inset-0 rounded-full ${themeConfig.accent.replace('text-', 'bg-')} opacity-50 animate-ping`}></div>
+                        )}
+                      </div>
+                      <span className={`text-xs font-medium transition-colors duration-300 whitespace-nowrap ${
+                        activeSection === item.id
+                          ? themeConfig.accent
+                          : `${themeConfig.textSecondary} group-hover:${themeConfig.accent}`
+                      }`}>
+                        {item.label}
+                      </span>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </nav>
-            
+
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`md:hidden p-2 ${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors`}
+              className={`lg:hidden p-2 ${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors`}
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
-          
+
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4 border-t border-slate-700/50 pt-4">
-              <div className="flex flex-col space-y-3">
-                {[
-                  { id: 'about', label: 'About' },
-                  { id: 'skills', label: 'Skills' },
-                  { id: 'projects', label: 'Projects' },
-                  { id: 'offbeat', label: 'Offbeat' },
-                  { id: 'music', label: 'Music' },
-                  { id: 'resume', label: 'Resume' },
-                  { id: 'contact', label: 'Contact' },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
-                    className={`text-left ${item.id === 'resume' ? 
-                      `px-3 py-2 rounded-lg border ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
-                      `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium py-2`
-                    } ${
-                      activeSection === item.id ? themeConfig.accent : ''
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
+            <nav className="lg:hidden mt-6 pb-4">
+              <div className="relative">
+                <div className={`absolute left-6 top-0 bottom-0 w-0.5 ${themeConfig.accent.replace('text-', 'bg-')} opacity-30`}></div>
+                <div className="space-y-1">
+                  {[
+                    { id: 'about', label: 'About', step: 1 },
+                    { id: 'skills', label: 'Skills', step: 2 },
+                    { id: 'projects', label: 'Projects', step: 3 },
+                    { id: 'offbeat', label: 'Offbeat', step: 4 },
+                    { id: 'music', label: 'Music', step: 5 },
+                    { id: 'resume', label: 'Resume', step: 6 },
+                    { id: 'contact', label: 'Contact', step: 7 },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        if (item.id === 'resume') {
+                          setIsResumeModalOpen(true);
+                        } else {
+                          scrollToSection(item.id);
+                        }
+                        setIsMenuOpen(false);
+                      }}
+                      className={`flex items-center w-full py-3 pl-2 pr-4 transition-all duration-300 group ${
+                        activeSection === item.id ? 'scale-105' : ''
+                      }`}
+                    >
+                      <div className={`relative w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm mr-4 transition-all duration-300 ${
+                        activeSection === item.id
+                          ? `${themeConfig.accent.replace('text-', 'bg-')} text-white shadow-lg`
+                          : `${themeConfig.cardBg} ${themeConfig.border} border-2 ${themeConfig.textSecondary} group-hover:border-current group-hover:${themeConfig.accent}`
+                      }`}>
+                        {item.step}
+                        {activeSection === item.id && (
+                          <div className={`absolute inset-0 rounded-full ${themeConfig.accent.replace('text-', 'bg-')} opacity-30 animate-ping`}></div>
+                        )}
+                      </div>
+                      <span className={`font-medium transition-colors duration-300 ${
+                        activeSection === item.id
+                          ? themeConfig.accent
+                          : `${themeConfig.textSecondary} group-hover:${themeConfig.accent}`
+                      }`}>
+                        {item.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </nav>
           )}
