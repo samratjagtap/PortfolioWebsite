@@ -19,6 +19,7 @@ function AppContent() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [skateboardPosition, setSkateboardPosition] = useState(0);
   
   const roles = ['Software Developer', 'Mobile Developer', 'Web Developer', 'Full Stack Engineer'];
   const fullText = roles[currentRole];
@@ -45,7 +46,23 @@ function AppContent() {
     const handleScroll = () => {
       const scrolled = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress((scrolled / maxScroll) * 100);
+      const progress = (scrolled / maxScroll) * 100;
+      setScrollProgress(progress);
+      setSkateboardPosition(progress);
+
+      const sections = ['hero', 'about', 'skills', 'projects', 'offbeat', 'music', 'contact'];
+      const sectionElements = sections.map(id => document.getElementById(id));
+
+      let currentSection = 'hero';
+      sectionElements.forEach((element, index) => {
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            currentSection = sections[index];
+          }
+        }
+      });
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -388,7 +405,7 @@ function AppContent() {
       {/* Navigation */}
       {/* Roadmap Navigation */}
       <header className={`fixed top-0 left-0 right-0 z-40 ${themeConfig.cardBg}/90 backdrop-blur-md`}>
-        <div className="container mx-auto px-6 py-6">
+        <div className="container mx-auto px-6 py-8">
           <div className="flex items-center justify-between">
             <div className="text-xl font-display font-bold">
               <GlitchText text="ALEX" className={`${themeConfig.accent} font-bold`} />
@@ -396,53 +413,92 @@ function AppContent() {
 
             {/* Desktop Roadmap Navigation */}
             <nav className="hidden lg:block relative">
-              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+              <svg className="absolute inset-0 w-full h-16 pointer-events-none" style={{ top: '50%', transform: 'translateY(-50%)' }}>
+                <defs>
+                  <linearGradient id="roadGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor={themeConfig.accent.includes('cyan') ? 'rgba(34, 211, 238, 0.6)' :
+                                                  themeConfig.accent.includes('orange') ? 'rgba(251, 146, 60, 0.6)' :
+                                                  themeConfig.accent.includes('purple') ? 'rgba(168, 85, 247, 0.6)' :
+                                                  'rgba(34, 211, 238, 0.6)'} />
+                    <stop offset="100%" stopColor={themeConfig.accent.includes('cyan') ? 'rgba(34, 211, 238, 0.2)' :
+                                                    themeConfig.accent.includes('orange') ? 'rgba(251, 146, 60, 0.2)' :
+                                                    themeConfig.accent.includes('purple') ? 'rgba(168, 85, 247, 0.2)' :
+                                                    'rgba(34, 211, 238, 0.2)'} />
+                  </linearGradient>
+                </defs>
                 <path
-                  d="M 0 20 Q 90 20, 120 20 T 240 20 T 360 20 T 480 20 T 600 20 T 720 20 T 840 20"
-                  stroke={themeConfig.accent.includes('cyan') ? 'rgba(34, 211, 238, 0.3)' :
-                         themeConfig.accent.includes('orange') ? 'rgba(251, 146, 60, 0.3)' :
-                         themeConfig.accent.includes('purple') ? 'rgba(168, 85, 247, 0.3)' :
-                         'rgba(34, 211, 238, 0.3)'}
-                  strokeWidth="2"
+                  d="M 20 30 Q 140 30, 160 30 T 280 30 T 420 30 T 560 30 T 700 30 T 840 30 T 980 30"
+                  stroke="url(#roadGradient)"
+                  strokeWidth="3"
                   fill="none"
-                  strokeDasharray="5,5"
-                  className="animate-pulse"
+                />
+                <path
+                  d="M 20 30 Q 140 30, 160 30 T 280 30 T 420 30 T 560 30 T 700 30 T 840 30 T 980 30"
+                  stroke={themeConfig.accent.includes('cyan') ? 'rgba(34, 211, 238, 0.1)' :
+                         themeConfig.accent.includes('orange') ? 'rgba(251, 146, 60, 0.1)' :
+                         themeConfig.accent.includes('purple') ? 'rgba(168, 85, 247, 0.1)' :
+                         'rgba(34, 211, 238, 0.1)'}
+                  strokeWidth="8"
+                  fill="none"
                 />
               </svg>
-              <div className="flex items-center relative">
+
+              {/* Skateboard indicator */}
+              <div
+                className="absolute pointer-events-none transition-all duration-300 ease-out"
+                style={{
+                  left: `${Math.min(95, skateboardPosition)}%`,
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
+              >
+                <div className="relative">
+                  <svg width="40" height="20" viewBox="0 0 40 20" className="drop-shadow-lg">
+                    <rect x="5" y="8" width="30" height="4" rx="2" fill={themeConfig.accent.includes('cyan') ? '#22d3ee' :
+                                                                           themeConfig.accent.includes('orange') ? '#fb923c' :
+                                                                           themeConfig.accent.includes('purple') ? '#a855f7' :
+                                                                           '#22d3ee'} />
+                    <circle cx="10" cy="16" r="3" fill="#374151" />
+                    <circle cx="30" cy="16" r="3" fill="#374151" />
+                    <circle cx="10" cy="16" r="1.5" fill="#9ca3af" />
+                    <circle cx="30" cy="16" r="1.5" fill="#9ca3af" />
+                  </svg>
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                    {Math.round(skateboardPosition)}%
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center relative pt-4">
                 {[
-                  { id: 'about', label: 'About', step: 1 },
-                  { id: 'skills', label: 'Skills', step: 2 },
-                  { id: 'projects', label: 'Projects', step: 3 },
-                  { id: 'offbeat', label: 'Offbeat', step: 4 },
-                  { id: 'music', label: 'Music', step: 5 },
-                  { id: 'resume', label: 'Resume', step: 6 },
-                  { id: 'contact', label: 'Contact', step: 7 },
+                  { id: 'about', label: 'About' },
+                  { id: 'skills', label: 'Skills' },
+                  { id: 'projects', label: 'Projects' },
+                  { id: 'offbeat', label: 'Offbeat' },
+                  { id: 'music', label: 'Music' },
+                  { id: 'resume', label: 'Resume' },
+                  { id: 'contact', label: 'Contact' },
                 ].map((item, index) => (
                   <div key={item.id} className="relative group">
                     <button
                       onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
-                      className={`relative flex flex-col items-center transition-all duration-300 px-3 ${
-                        index < 6 ? 'mr-8' : ''
+                      className={`relative flex flex-col items-center transition-all duration-300 ${
+                        index < 6 ? 'mr-16' : ''
                       }`}
                     >
-                      <div className={`relative mb-2 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 ${
+                      <div className={`relative px-4 py-2 rounded-lg font-semibold text-xs uppercase tracking-wider transition-all duration-300 ${
                         activeSection === item.id
                           ? `${themeConfig.accent.replace('text-', 'bg-')} text-white shadow-lg scale-110`
-                          : `${themeConfig.cardBg} ${themeConfig.border} border-2 ${themeConfig.textSecondary} group-hover:border-current group-hover:${themeConfig.accent} group-hover:scale-105`
-                      }`}>
-                        {item.step}
-                        {activeSection === item.id && (
-                          <div className={`absolute inset-0 rounded-full ${themeConfig.accent.replace('text-', 'bg-')} opacity-50 animate-ping`}></div>
-                        )}
-                      </div>
-                      <span className={`text-xs font-medium transition-colors duration-300 whitespace-nowrap ${
-                        activeSection === item.id
-                          ? themeConfig.accent
-                          : `${themeConfig.textSecondary} group-hover:${themeConfig.accent}`
+                          : `${themeConfig.cardBg} ${themeConfig.border} border ${themeConfig.textSecondary} group-hover:border-current group-hover:${themeConfig.accent} group-hover:scale-105`
                       }`}>
                         {item.label}
-                      </span>
+                        {activeSection === item.id && (
+                          <>
+                            <div className={`absolute inset-0 rounded-lg ${themeConfig.accent.replace('text-', 'bg-')} opacity-30 animate-ping`}></div>
+                            <div className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-2 h-2 ${themeConfig.accent.replace('text-', 'bg-')} rotate-45`}></div>
+                          </>
+                        )}
+                      </div>
                     </button>
                   </div>
                 ))}
@@ -462,16 +518,16 @@ function AppContent() {
           {isMenuOpen && (
             <nav className="lg:hidden mt-6 pb-4">
               <div className="relative">
-                <div className={`absolute left-6 top-0 bottom-0 w-0.5 ${themeConfig.accent.replace('text-', 'bg-')} opacity-30`}></div>
-                <div className="space-y-1">
+                <div className={`absolute left-12 top-0 bottom-0 w-1 rounded-full ${themeConfig.accent.replace('text-', 'bg-')} opacity-20`}></div>
+                <div className="space-y-2">
                   {[
-                    { id: 'about', label: 'About', step: 1 },
-                    { id: 'skills', label: 'Skills', step: 2 },
-                    { id: 'projects', label: 'Projects', step: 3 },
-                    { id: 'offbeat', label: 'Offbeat', step: 4 },
-                    { id: 'music', label: 'Music', step: 5 },
-                    { id: 'resume', label: 'Resume', step: 6 },
-                    { id: 'contact', label: 'Contact', step: 7 },
+                    { id: 'about', label: 'About' },
+                    { id: 'skills', label: 'Skills' },
+                    { id: 'projects', label: 'Projects' },
+                    { id: 'offbeat', label: 'Offbeat' },
+                    { id: 'music', label: 'Music' },
+                    { id: 'resume', label: 'Resume' },
+                    { id: 'contact', label: 'Contact' },
                   ].map((item) => (
                     <button
                       key={item.id}
@@ -483,21 +539,20 @@ function AppContent() {
                         }
                         setIsMenuOpen(false);
                       }}
-                      className={`flex items-center w-full py-3 pl-2 pr-4 transition-all duration-300 group ${
+                      className={`flex items-center w-full py-3 transition-all duration-300 group ${
                         activeSection === item.id ? 'scale-105' : ''
                       }`}
                     >
-                      <div className={`relative w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm mr-4 transition-all duration-300 ${
+                      <div className={`relative w-6 h-6 rounded-full mr-6 flex-shrink-0 transition-all duration-300 ${
                         activeSection === item.id
-                          ? `${themeConfig.accent.replace('text-', 'bg-')} text-white shadow-lg`
-                          : `${themeConfig.cardBg} ${themeConfig.border} border-2 ${themeConfig.textSecondary} group-hover:border-current group-hover:${themeConfig.accent}`
+                          ? `${themeConfig.accent.replace('text-', 'bg-')} shadow-lg`
+                          : `${themeConfig.cardBg} ${themeConfig.border} border-2 group-hover:border-current`
                       }`}>
-                        {item.step}
                         {activeSection === item.id && (
-                          <div className={`absolute inset-0 rounded-full ${themeConfig.accent.replace('text-', 'bg-')} opacity-30 animate-ping`}></div>
+                          <div className={`absolute inset-0 rounded-full ${themeConfig.accent.replace('text-', 'bg-')} opacity-50 animate-ping`}></div>
                         )}
                       </div>
-                      <span className={`font-medium transition-colors duration-300 ${
+                      <span className={`font-semibold text-sm uppercase tracking-wide transition-colors duration-300 ${
                         activeSection === item.id
                           ? themeConfig.accent
                           : `${themeConfig.textSecondary} group-hover:${themeConfig.accent}`
