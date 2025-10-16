@@ -63,7 +63,7 @@ export const InteractiveBackground: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
 
     const animate = (timestamp: number) => {
-      const coreColor = themeConfig.nodeColors.core;
+      const coreColor = themeConfig.nodeColor;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -158,16 +158,7 @@ export const InteractiveBackground: React.FC = () => {
 
   // Dynamic background gradient based on theme
   const getBackgroundStyle = () => {
-    switch (themeConfig.name) {
-      case 'Light':
-        return '#ffffff';
-      case 'Fire':
-        return '#0a0a0a';
-      case 'Funky':
-        return '#0f0624';
-      default:
-        return '#020617';
-    }
+    return themeConfig.mode === 'light' ? '#ffffff' : '#020617';
   };
 
   return (

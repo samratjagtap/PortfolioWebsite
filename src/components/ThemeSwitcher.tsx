@@ -1,65 +1,80 @@
 import React, { useState } from 'react';
-import { Palette, Sun, Moon, Flame, Zap } from 'lucide-react';
-import { useTheme, Theme } from './ThemeProvider';
+import { Palette, Sun, Moon, Circle } from 'lucide-react';
+import { useTheme, ThemeMode, ThemeColor } from './ThemeProvider';
 
 export const ThemeSwitcher: React.FC = () => {
-  const { theme, setTheme, themeConfig } = useTheme();
+  const { mode, color, setMode, setColor, themeConfig } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
-  const themeOptions = [
-    { key: 'dark' as Theme, name: 'Dark', icon: Moon, color: 'bg-slate-800' },
-    { key: 'light' as Theme, name: 'Light', icon: Sun, color: 'bg-white' },
-    { key: 'fire' as Theme, name: 'Fire', icon: Flame, color: 'bg-red-600' },
-    { key: 'funky' as Theme, name: 'Funky', icon: Zap, color: 'bg-gradient-to-r from-green-400 to-purple-500' },
+  const colorOptions: { key: ThemeColor; name: string; color: string }[] = [
+    { key: 'cyan', name: 'Cyan', color: '#22d3ee' },
+    { key: 'orange', name: 'Orange', color: '#fb923c' },
+    { key: 'green', name: 'Green', color: '#4ade80' },
+    { key: 'red', name: 'Red', color: '#f87171' },
+    { key: 'blue', name: 'Blue', color: '#60a5fa' },
   ];
-
-  const handleThemeChange = (newTheme: Theme) => {
-    setTheme(newTheme);
-    setIsOpen(false);
-    
-    // Add a fun animation effect
-    document.body.style.transition = 'all 0.5s ease';
-    setTimeout(() => {
-      document.body.style.transition = '';
-    }, 500);
-  };
 
   return (
     <div className="fixed top-20 right-6 z-50">
       <div className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`p-3 rounded-full ${themeConfig.cardBg} ${themeConfig.border} border backdrop-blur-sm hover:scale-110 transition-all duration-300 group`}
-          style={{
-            boxShadow: `0 0 20px ${themeConfig.glowColor}`,
-          }}
+          className={`p-3 rounded-full ${themeConfig.cardBg} ${themeConfig.border} border backdrop-blur-sm hover:scale-110 transition-all duration-300 group shadow-lg`}
         >
           <Palette className={`w-6 h-6 ${themeConfig.accent} group-hover:rotate-12 transition-transform`} />
         </button>
 
         {isOpen && (
-          <div className={`absolute top-16 right-0 ${themeConfig.cardBg} ${themeConfig.border} border backdrop-blur-sm rounded-2xl p-4 min-w-48 animate-in slide-in-from-top-2 duration-300`}>
-            <h3 className={`${themeConfig.textPrimary} font-display font-semibold mb-3`}>Choose Theme</h3>
-            <div className="space-y-2">
-              {themeOptions.map(({ key, name, icon: Icon, color }) => (
+          <div className={`absolute top-16 right-0 ${themeConfig.cardBg} ${themeConfig.border} border backdrop-blur-md rounded-2xl p-5 w-64 shadow-2xl`}>
+            <h3 className={`${themeConfig.textPrimary} font-display font-semibold mb-4`}>Theme Settings</h3>
+
+            <div className="mb-5">
+              <label className={`${themeConfig.textSecondary} text-sm font-medium mb-2 block`}>Mode</label>
+              <div className="flex gap-2">
                 <button
-                  key={key}
-                  onClick={() => handleThemeChange(key)}
-                  className={`w-full flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 hover:scale-105 ${
-                    theme === key 
-                      ? `${themeConfig.accent} bg-current/10` 
-                      : `${themeConfig.textSecondary} hover:${themeConfig.textPrimary}`
+                  onClick={() => setMode('dark')}
+                  className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg transition-all duration-300 ${
+                    mode === 'dark'
+                      ? `${themeConfig.accent} bg-current/10 scale-105`
+                      : `${themeConfig.textSecondary} hover:${themeConfig.textPrimary} hover:bg-slate-700/20`
                   }`}
                 >
-                  <div className={`w-8 h-8 rounded-full ${color} flex items-center justify-center`}>
-                    <Icon className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="font-medium">{name}</span>
-                  {theme === key && (
-                    <div className={`ml-auto w-2 h-2 rounded-full ${themeConfig.accent.replace('text-', 'bg-')}`} />
-                  )}
+                  <Moon className="w-4 h-4" />
+                  <span className="text-sm font-medium">Dark</span>
                 </button>
-              ))}
+                <button
+                  onClick={() => setMode('light')}
+                  className={`flex-1 flex items-center justify-center gap-2 p-3 rounded-lg transition-all duration-300 ${
+                    mode === 'light'
+                      ? `${themeConfig.accent} bg-current/10 scale-105`
+                      : `${themeConfig.textSecondary} hover:${themeConfig.textPrimary} hover:bg-slate-700/20`
+                  }`}
+                >
+                  <Sun className="w-4 h-4" />
+                  <span className="text-sm font-medium">Light</span>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className={`${themeConfig.textSecondary} text-sm font-medium mb-2 block`}>Color</label>
+              <div className="grid grid-cols-5 gap-2">
+                {colorOptions.map((option) => (
+                  <button
+                    key={option.key}
+                    onClick={() => setColor(option.key)}
+                    className={`aspect-square rounded-lg transition-all duration-300 hover:scale-110 relative ${
+                      color === option.key ? 'ring-2 ring-offset-2 ring-current scale-110' : ''
+                    }`}
+                    style={{ backgroundColor: option.color }}
+                    title={option.name}
+                  >
+                    {color === option.key && (
+                      <Circle className="w-4 h-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white fill-white" />
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}

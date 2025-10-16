@@ -9,6 +9,7 @@ import { GlitchText } from './components/GlitchText';
 import { MorphingCard } from './components/MorphingCard';
 import { SpotifyPlayer } from './components/SpotifyPlayer';
 import { MultilingualName } from './components/MultilingualName';
+import { RoadmapNav } from './components/RoadmapNav';
 
 function AppContent() {
   const { themeConfig } = useTheme();
@@ -386,80 +387,14 @@ function AppContent() {
       <ThemeSwitcher />
 
       {/* Navigation */}
-      {/* Clean Header Navigation */}
-      <header className={`fixed top-0 left-0 right-0 z-40 ${themeConfig.cardBg}/80 backdrop-blur-md ${themeConfig.border} border-b`}>
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="text-xl font-display font-bold">
-              <GlitchText text="ALEX" className={`${themeConfig.accent} font-bold`} />
-            </div>
-            
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {[
-                { id: 'about', label: 'About' },
-                { id: 'skills', label: 'Skills' },
-                { id: 'projects', label: 'Projects' },
-                { id: 'offbeat', label: 'Offbeat' },
-                { id: 'music', label: 'Music' },
-                { id: 'resume', label: 'Resume' },
-                { id: 'contact', label: 'Contact' },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
-                  className={`${item.id === 'resume' ? 
-                    `px-4 py-2 rounded-full border-2 ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
-                    `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium`
-                  } ${
-                    activeSection === item.id ? themeConfig.accent : ''
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-            
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`md:hidden p-2 ${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors`}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-          
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <nav className="md:hidden mt-4 pb-4 border-t border-slate-700/50 pt-4">
-              <div className="flex flex-col space-y-3">
-                {[
-                  { id: 'about', label: 'About' },
-                  { id: 'skills', label: 'Skills' },
-                  { id: 'projects', label: 'Projects' },
-                  { id: 'offbeat', label: 'Offbeat' },
-                  { id: 'music', label: 'Music' },
-                  { id: 'resume', label: 'Resume' },
-                  { id: 'contact', label: 'Contact' },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => item.id === 'resume' ? setIsResumeModalOpen(true) : scrollToSection(item.id)}
-                    className={`text-left ${item.id === 'resume' ? 
-                      `px-3 py-2 rounded-lg border ${themeConfig.border} ${themeConfig.accent} hover:${themeConfig.accent.replace('text-', 'bg-')} hover:text-white transition-all duration-300 font-semibold` : 
-                      `${themeConfig.textSecondary} hover:${themeConfig.accent} transition-colors duration-300 font-medium py-2`
-                    } ${
-                      activeSection === item.id ? themeConfig.accent : ''
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </nav>
-          )}
-        </div>
-      </header>
+      <RoadmapNav
+        activeSection={activeSection}
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+        scrollToSection={scrollToSection}
+        setIsResumeModalOpen={setIsResumeModalOpen}
+        skateboardPosition={skateboardPosition}
+      />
 
       {/* Hero Section */}
       <section id="hero" className="min-h-screen flex items-center justify-center relative section-padding pt-24">

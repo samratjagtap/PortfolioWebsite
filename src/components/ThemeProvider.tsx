@@ -1,118 +1,100 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Theme = 'dark' | 'light' | 'fire' | 'funky';
+export type ThemeMode = 'dark' | 'light';
+export type ThemeColor = 'cyan' | 'orange' | 'green' | 'red' | 'blue';
 
 interface ThemeContextType {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
+  mode: ThemeMode;
+  color: ThemeColor;
+  setMode: (mode: ThemeMode) => void;
+  setColor: (color: ThemeColor) => void;
   themeConfig: ThemeConfig;
 }
 
 interface ThemeConfig {
-  name: string;
+  mode: ThemeMode;
+  color: ThemeColor;
   background: string;
   cardBg: string;
   textPrimary: string;
   textSecondary: string;
   accent: string;
-  accentSecondary: string;
+  accentHex: string;
   border: string;
-  glowColor: string;
-  nodeColors: {
-    core: string;
-    satellite: string;
-    data: string;
-  };
+  nodeColor: string;
 }
 
-const themes: Record<Theme, ThemeConfig> = {
-  dark: {
-    name: 'Dark',
-    background: 'from-slate-900 via-slate-800 to-slate-900',
-    cardBg: 'bg-slate-800/30',
-    textPrimary: 'text-white',
-    textSecondary: 'text-slate-300',
-    accent: 'text-cyan-400',
-    accentSecondary: 'text-purple-400',
-    border: 'border-slate-700/50',
-    glowColor: 'rgba(34, 211, 238, 0.4)',
-    nodeColors: {
-      core: '168, 85, 247',
-      satellite: '34, 211, 238',
-      data: '34, 197, 94'
+const getThemeConfig = (mode: ThemeMode, color: ThemeColor): ThemeConfig => {
+  const isDark = mode === 'dark';
+
+  const colorMap = {
+    cyan: {
+      accent: isDark ? 'text-cyan-400' : 'text-cyan-600',
+      accentHex: isDark ? '#22d3ee' : '#0891b2',
+      nodeColor: isDark ? '34, 211, 238' : '8, 145, 178'
+    },
+    orange: {
+      accent: isDark ? 'text-orange-400' : 'text-orange-600',
+      accentHex: isDark ? '#fb923c' : '#ea580c',
+      nodeColor: isDark ? '251, 146, 60' : '234, 88, 12'
+    },
+    green: {
+      accent: isDark ? 'text-green-400' : 'text-green-600',
+      accentHex: isDark ? '#4ade80' : '#16a34a',
+      nodeColor: isDark ? '74, 222, 128' : '22, 163, 74'
+    },
+    red: {
+      accent: isDark ? 'text-red-400' : 'text-red-600',
+      accentHex: isDark ? '#f87171' : '#dc2626',
+      nodeColor: isDark ? '248, 113, 113' : '220, 38, 38'
+    },
+    blue: {
+      accent: isDark ? 'text-blue-400' : 'text-blue-600',
+      accentHex: isDark ? '#60a5fa' : '#2563eb',
+      nodeColor: isDark ? '96, 165, 250' : '37, 99, 235'
     }
-  },
-  light: {
-    name: 'Light',
-    background: 'from-gray-50 via-white to-gray-100',
-    cardBg: 'bg-white/95 backdrop-blur-sm',
-    textPrimary: 'text-slate-800',
-    textSecondary: 'text-slate-600',
-    accent: 'text-indigo-600',
-    accentSecondary: 'text-purple-600',
-    border: 'border-slate-200/50',
-    glowColor: 'rgba(99, 102, 241, 0.4)',
-    nodeColors: {
-      core: '99, 102, 241',
-      satellite: '168, 85, 247',
-      data: '99, 102, 241'
-    }
-  },
-  fire: {
-    name: 'Fire',
-    background: 'from-gray-900 via-red-900/20 to-black',
-    cardBg: 'bg-red-900/20',
-    textPrimary: 'text-white',
-    textSecondary: 'text-red-100',
-    accent: 'text-red-400',
-    accentSecondary: 'text-orange-400',
-    border: 'border-red-500/30',
-    glowColor: 'rgba(255, 72, 33, 0.4)',
-    nodeColors: {
-      core: '255, 72, 33',
-      satellite: '251, 146, 60',
-      data: '239, 68, 68'
-    }
-  },
-  funky: {
-    name: 'Funky',
-    background: 'from-purple-900 via-pink-900/30 to-indigo-900',
-    cardBg: 'bg-purple-900/30',
-    textPrimary: 'text-white',
-    textSecondary: 'text-purple-100',
-    accent: 'text-green-400',
-    accentSecondary: 'text-purple-400',
-    border: 'border-purple-500/30',
-    glowColor: 'rgba(140, 255, 87, 0.4)',
-    nodeColors: {
-      core: '92, 44, 255',
-      satellite: '140, 255, 87',
-      data: '255, 80, 9'
-    }
-  }
+  };
+
+  return {
+    mode,
+    color,
+    background: isDark ? 'from-slate-900 to-slate-950' : 'from-white to-slate-50',
+    cardBg: isDark ? 'bg-slate-800/40' : 'bg-white/80',
+    textPrimary: isDark ? 'text-white' : 'text-slate-900',
+    textSecondary: isDark ? 'text-slate-400' : 'text-slate-600',
+    accent: colorMap[color].accent,
+    accentHex: colorMap[color].accentHex,
+    border: isDark ? 'border-slate-700/50' : 'border-slate-300/50',
+    nodeColor: colorMap[color].nodeColor
+  };
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [mode, setMode] = useState<ThemeMode>('dark');
+  const [color, setColor] = useState<ThemeColor>('cyan');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('portfolio-theme') as Theme;
-    if (savedTheme && themes[savedTheme]) {
-      setTheme(savedTheme);
-    }
+    const savedMode = localStorage.getItem('portfolio-mode') as ThemeMode;
+    const savedColor = localStorage.getItem('portfolio-color') as ThemeColor;
+    if (savedMode) setMode(savedMode);
+    if (savedColor) setColor(savedColor);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('portfolio-theme', theme);
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    localStorage.setItem('portfolio-mode', mode);
+    localStorage.setItem('portfolio-color', color);
+    document.documentElement.setAttribute('data-mode', mode);
+    document.documentElement.setAttribute('data-color', color);
+  }, [mode, color]);
 
   const value = {
-    theme,
-    setTheme,
-    themeConfig: themes[theme]
+    mode,
+    color,
+    setMode,
+    setColor,
+    themeConfig: getThemeConfig(mode, color)
   };
 
   return (
