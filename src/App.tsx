@@ -20,7 +20,8 @@ function AppContent() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
-  
+  const [skateboardPosition, setSkateboardPosition] = useState(0);
+
   const roles = ['Software Developer', 'Mobile Developer', 'Web Developer', 'Full Stack Engineer'];
   const fullText = roles[currentRole];
 
@@ -46,7 +47,23 @@ function AppContent() {
     const handleScroll = () => {
       const scrolled = window.scrollY;
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress((scrolled / maxScroll) * 100);
+      const progress = (scrolled / maxScroll) * 100;
+      setScrollProgress(progress);
+      setSkateboardPosition(progress);
+
+      const sections = ['hero', 'about', 'skills', 'projects', 'offbeat', 'music', 'contact'];
+      const sectionElements = sections.map(id => document.getElementById(id));
+
+      let currentSection = 'hero';
+      sectionElements.forEach((element, index) => {
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            currentSection = sections[index];
+          }
+        }
+      });
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll);
