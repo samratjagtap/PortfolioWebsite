@@ -471,7 +471,7 @@ function AppContent() {
           </h2>
           
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <MorphingCard className="p-8" hoverColor={themeConfig.accent.split('-')[1]}>
+            <MorphingCard className="p-8" hoverColor={themeConfig.color}>
               <h3 className={`text-3xl font-display font-semibold mb-6 ${themeConfig.textPrimary}`}>The Developer</h3>
               <p className={`${themeConfig.textSecondary} mb-6 leading-relaxed text-lg`}>
                 I'm a passionate full-stack developer with 5+ years of experience crafting digital solutions 
@@ -498,7 +498,7 @@ function AppContent() {
               </div>
             </MorphingCard>
 
-            <MorphingCard className="p-8" hoverColor={themeConfig.accentSecondary.split('-')[1]}>
+            <MorphingCard className="p-8" hoverColor={themeConfig.color}>
               <h3 className={`text-3xl font-display font-semibold mb-6 ${themeConfig.textPrimary}`}>The Adventurer</h3>
               <p className={`${themeConfig.textSecondary} mb-6 leading-relaxed text-lg`}>
                 Beyond the screen, I'm all about pushing limits and exploring the unconventional. 
@@ -682,9 +682,9 @@ function AppContent() {
           <div className="grid lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <MorphingCard 
-                key={index} 
+                key={index}
                 className={`overflow-hidden group ${project.featured ? 'lg:col-span-2' : ''}`}
-                hoverColor={themeConfig.accent.split('-')[1]}
+                hoverColor={themeConfig.color}
               >
                 <div className="relative overflow-hidden">
                   <img 
@@ -876,9 +876,9 @@ function AppContent() {
           <h2 className="text-5xl font-display font-bold text-center mb-16">
             <GlitchText text="Let's Connect" className={themeConfig.accent} />
           </h2>
-          
+
           <div className="max-w-4xl mx-auto">
-            <MorphingCard className="p-8" hoverColor={themeConfig.accent.split('-')[1]}>
+            <MorphingCard className="p-8" hoverColor={themeConfig.color}>
               <form className="space-y-8">
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-2">

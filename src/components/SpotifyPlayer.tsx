@@ -262,7 +262,7 @@ export const SpotifyPlayer: React.FC = () => {
             <Headphones className={`w-8 h-8 ${themeConfig.accent}`} />
           </div>
           <div className={`p-4 rounded-full ${themeConfig.cardBg} ${themeConfig.border} border`}>
-            <Music className={`w-8 h-8 ${themeConfig.accentSecondary}`} />
+            <Music className={`w-8 h-8 ${themeConfig.accent}`} />
           </div>
           <div className={`p-4 rounded-full ${themeConfig.cardBg} ${themeConfig.border} border`}>
             <Radio className={`w-8 h-8 ${themeConfig.accent}`} />
@@ -329,7 +329,7 @@ export const SpotifyPlayer: React.FC = () => {
               key={index}
               className="absolute w-2 h-2 rounded-full opacity-60"
               style={{
-                background: `linear-gradient(45deg, ${themeConfig.accent.replace('text-', '').replace('-400', '')}-400, ${themeConfig.accentSecondary.replace('text-', '').replace('-400', '')}-400)`,
+                background: themeConfig.accentHex,
                 left: `${10 + index * 12}%`,
                 top: `${20 + Math.sin(Date.now() * 0.01 + index) * 10}%`,
                 transform: `scale(${0.5 + intensity * 2}) translateY(${-intensity * 20}px)`,
@@ -373,7 +373,7 @@ export const SpotifyPlayer: React.FC = () => {
                         className="w-1 bg-gradient-to-t opacity-70 rounded-full"
                         style={{
                           height: `${Math.max(4, intensity * 40)}px`,
-                          background: `linear-gradient(to top, ${themeConfig.accent.replace('text-', '').replace('-400', '')}-400, ${themeConfig.accentSecondary.replace('text-', '').replace('-400', '')}-400)`,
+                          background: themeConfig.accentHex,
                           transform: `scaleY(${0.3 + intensity * 2})`,
                           transition: 'transform 0.1s ease-out',
                         }}
@@ -443,7 +443,7 @@ export const SpotifyPlayer: React.FC = () => {
                       <div 
                         className="absolute inset-0 rounded-full opacity-30"
                         style={{
-                          background: `linear-gradient(90deg, ${themeConfig.accent.replace('text-', '').replace('-400', '')}-400, ${themeConfig.accentSecondary.replace('text-', '').replace('-400', '')}-400)`,
+                          background: themeConfig.accentHex,
                           filter: `blur(${beatIntensity * 4}px)`,
                           transform: `scaleY(${1 + beatIntensity * 0.5})`,
                         }}
